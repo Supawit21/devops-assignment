@@ -44,7 +44,7 @@ pipeline{
         stage('Deploy'){
             steps{
                 script{
-                    sh "helm upgrade --install ${demo} ./helm --values ./helm/demo-values.yaml"
+                    sh "helm upgrade --install ${application_name} ./helm --values ./helm/demo-values.yaml"
                 }
             }
         }
