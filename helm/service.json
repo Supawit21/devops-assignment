@@ -1,0 +1,9 @@
+[
+    {
+        "deployment_replicas": "2",
+        "deployment_containerPort": "8080",
+        "servce_type": "NodePort",
+        "service_port": "8080",
+        "service_targetPort": "8080"
+    }
+]

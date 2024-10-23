@@ -1,0 +1,15 @@
+# images
+image:
+  repository: ${image_name}
+  tag: ${image_tag}
+
+# deployment
+deployment:
+  replicas: ${deployment_replicas}
+  containerPort: ${deployment_containerPort}
+
+# service
+service:
+  type: ${servce_type}
+  port: ${service_port}
+  targetPort: ${service_targetPort}
