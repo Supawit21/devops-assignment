@@ -17,12 +17,12 @@ pipeline{
         }
         stage('Build-Image'){
             steps{
-                bat "docker build --build-arg service_name=${image_name} -t ${github_url}/${namespace}/${image_name}:${image_tag} ."
+                sh "docker build --build-arg service_name=${image_name} -t ${github_url}/${namespace}/${image_name}:${image_tag} ."
             }
         }
         stage('Push-Image'){
             steps{
-                bat """
+                sh """
                     docker login ${github_url} -u ${github_auth_USR} -p ${github_auth_PSW}
                     docker push ${github_url}/${namespace}/${image_name}:${image_tag}
                 """
@@ -37,14 +37,14 @@ pipeline{
                         env."${key}" = value
                     }
 
-                    bat 'envsubst < ./helm/values.yaml > ./helm/demo-values.yaml'
+                    sh 'envsubst < ./helm/values.yaml > ./helm/demo-values.yaml'
                 }
             }
         }
         stage('Deploy'){
             steps{
                 script{
-                    bat 'helm upgrade --install demo ./helm --values ./helm/demo-values.yaml'
+                    sh "helm upgrade --install ${demo} ./helm --values ./helm/demo-values.yaml"
                 }
             }
         }
