@@ -1,11 +1,11 @@
 pipeline{
-    agent none
+    agent any
     options{skipDefaultCheckout()}
     environment{
         github_url          = "ghcr.io"
         github_auth         = credentials('github_auth')
-        namespace           = "Supawit21"
-        image_name          = "devops-assignment"
+        namespace           = "supawit21"
+        image_name          = "${github_url}/${namespace}/devops-assignment"
         image_tag           = "demo-1.0"
         application_name    = "demo"
     }
@@ -17,14 +17,14 @@ pipeline{
         }
         stage('Build-Image'){
             steps{
-                sh "docker build --build-arg service_name=${image_name} -t ${github_url}/${namespace}/${image_name}:${image_tag} ."
+                sh "docker build --build-arg service_name=${application_name} -t ${image_name}:${image_tag} ."
             }
         }
         stage('Push-Image'){
             steps{
                 sh """
                     docker login ${github_url} -u ${github_auth_USR} -p ${github_auth_PSW}
-                    docker push ${github_url}/${namespace}/${image_name}:${image_tag}
+                    docker push ${image_name}:${image_tag}
                 """
             }
         }
